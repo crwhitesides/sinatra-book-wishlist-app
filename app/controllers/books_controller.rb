@@ -11,7 +11,11 @@ class BooksController < ApplicationController
   end
 
   get '/books/new' do
-    erb :'/books/create_book'
+    if session[:user_id]
+      erb :'/books/create_book'
+    else
+      redirect to '/login'
+    end
   end
 
   post '/books' do
@@ -30,7 +34,7 @@ class BooksController < ApplicationController
   get '/books/:id' do
     if session[:user_id]
       @book = Book.find_by_id(params[:id])
-      if session[:user_id] == @book.id
+      if session[:user_id] == @book.user_id
         erb :'/books/show_book'
       else
         redirect to '/books'
@@ -38,5 +42,9 @@ class BooksController < ApplicationController
     else
       redirect to '/login'
     end
+  end
+
+  get '/books/:id/edit' do
+
   end
 end
