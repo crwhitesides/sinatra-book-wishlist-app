@@ -25,13 +25,13 @@ class BooksController < ApplicationController
     else
       user = User.find_by_id(session[:user_id])
       @book = Book.create(title: params[:title], author: params[:author], user_id: user.id)
-      redirect to "/books/#{@book.id}"
+      redirect to "/books/#{@book.slug}"
     end
   end
 
-  get '/books/:id' do
+  get '/books/:slug' do
     if session[:user_id]
-      @book = Book.find_by_id(params[:id])
+      @book = Book.find_by_slug(params[:slug])
       if @book.user_id == session[:user_id]
         erb :'/books/show_book'
       else
@@ -42,9 +42,9 @@ class BooksController < ApplicationController
     end
   end
 
-  get '/books/:id/edit' do
+  get '/books/:slug/edit' do
     if session[:user_id]
-      @book = Book.find_by_id(params[:id])
+      @book = Book.find_by_slug(params[:slug])
       if session[:user_id] == @book.user_id
         erb :'/books/edit_book'
       else
@@ -55,22 +55,22 @@ class BooksController < ApplicationController
     end
   end
 
-  patch '/books/:id' do
+  patch '/books/:slug' do
     if params[:title] == "" || params[:author] == ""
       flash[:message] = "A book just isn't a book without a title or an author..."
-      redirect to "/books/#{@book.id}/edit"
+      redirect to "/books/#{@book.slug}/edit"
     else
-      @book = Book.find_by_id(params[:id])
+      @book = Book.find_by_slug(params[:slug])
       @book.title = params[:title]
       @book.author = params[:author]
       @book.save
-      redirect to "/books/#{@book.id}"    
+      redirect to "/books/#{@book.slug}"    
     end
   end
 
-  delete '/books/:id/delete' do
+  delete '/books/:slug/delete' do
     if session[:user_id]
-      @book = Book.find_by_id(params[:id])
+      @book = Book.find_by_slug(params[:slug])
       if @book.user_id == session[:user_id]
         @book.delete
         redirect to '/books'

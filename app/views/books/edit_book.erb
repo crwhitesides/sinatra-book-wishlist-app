@@ -4,7 +4,7 @@
 
 <h1>Edit book:</h1>
 
-<form method="POST" action='/books/<%= @book.id %>'>
+<form method="POST" action='/books/<%= @book.slug %>'>
   <input id="hidden" type="hidden" name="_method" value="PATCH">
   <label>Title:</label>
 
