@@ -18,4 +18,13 @@ class UsersController < ApplicationController
       redirect to '/books'
     end
   end
+
+  get '/logout' do
+    if session[:user_id]
+      session.clear
+      redirect to '/'
+    else
+      redirect to '/login'
+    end
+  end
 end
