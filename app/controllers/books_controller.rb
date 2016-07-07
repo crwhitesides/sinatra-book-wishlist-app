@@ -20,6 +20,7 @@ class BooksController < ApplicationController
 
   post '/books' do
     @book = Book.find_by(title: params[:title], author: params[:author])
+    
     if @book
       flash[:message] = "** It looks like that book is already on your list. **"
       redirect to '/books'
