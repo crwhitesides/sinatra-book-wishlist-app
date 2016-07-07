@@ -19,7 +19,11 @@ class BooksController < ApplicationController
   end
 
   post '/books' do
-    if params[:title] == "" || params[:author] == ""
+    @book = Book.find_by(title: params[:title], author: params[:author])
+    if @book
+      flash[:message] = "** It looks like that book is already on your list. **"
+      redirect to '/books'
+    elsif params[:title] == "" || params[:author] == ""
       flash[:message] = "A book just isn't a book without a title and an author..."
       redirect to '/books/new'
     else
