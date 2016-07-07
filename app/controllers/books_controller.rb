@@ -45,6 +45,28 @@ class BooksController < ApplicationController
   end
 
   get '/books/:id/edit' do
+    if session[:user_id]
+      @book = Book.find_by_id(params[:id])
+      if session[:user_id] == @book.user_id
+        erb :'/books/edit_book'
+      else
+        redirect to '/books'
+      end
+    else
+      redirect to '/login'
+    end
+  end
 
+  patch '/books/:id' do
+    @book = Book.find_by_id(params[:id])
+    @book.title = params[:title]
+    @book.author = params[:author]
+
+    if @book.save
+      redirect to "/books/#{@book.id}"
+    else
+      flash[:message] = "A book just isn't a book without a title or an author..."
+      redirect to "/books/#{@book.id}/edit"
+    end
   end
 end
