@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   end
 
   post '/signup' do
-    if params[:username] == "" || params[:emails] == "" || params[:password] == ""
+    if params[:username] == "" || params[:email] == "" || params[:password] == ""
       flash[:message] = "Hold your horses! Make sure you fill in all the fields."
       redirect to '/signup'
     else
