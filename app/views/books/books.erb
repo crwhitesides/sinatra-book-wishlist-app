@@ -1,0 +1,9 @@
+<h1>Welcome, <%= @user.username %>!</h1>
+
+<h2>Your book wish list has <%= @books.count %> title(s):</h2>
+
+<% @books.each do |book| %>
+  <div>
+    <p><strong><%= book.title %></strong> by <%= book.author %></p>
+  </div>
+<% end %>
