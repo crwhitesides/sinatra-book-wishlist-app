@@ -69,4 +69,18 @@ class BooksController < ApplicationController
       redirect to "/books/#{@book.id}/edit"
     end
   end
+
+  delete '/books/:id/delete' do
+    if session[:user_id]
+      @book = Book.find_by_id(params[:id])
+      if @book.user_id == session[:user_id]
+        @book.delete
+        redirect to '/books'
+      else
+        redirect to '/books'
+      end
+    else
+      redirect to '/login'
+    end
+  end
 end
