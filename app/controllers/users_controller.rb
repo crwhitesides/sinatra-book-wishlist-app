@@ -1,12 +1,21 @@
 class UsersController < ApplicationController
 
   get '/signup' do
-    erb :'/users/create_user'
+    if session[:user_id]
+      redirect to '/books'
+    else
+      erb :'/users/create_user'
+    end
   end
 
   post '/signup' do
-    @user = User.create(username: params[:username], email: params[:email], password: params[:password])
-    session[:user_id] = @user.id
-    redirect to '/books'
+    if params[:username] == "" || params[:emails] == "" || params[:password] == ""
+      flash[:message] = "Hold your horses! Make sure you fill in all the fields."
+      redirect to '/signup'
+    else
+      @user = User.create(params)
+      session[:user_id] = @user.id 
+      redirect to '/books'
+    end
   end
 end
