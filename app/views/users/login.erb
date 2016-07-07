@@ -1,0 +1,21 @@
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+<% end %>
+
+<h2>Log in to your Book Wishlist account:</h2>
+
+<form method="POST" action="/login">
+  <label>Username:</label>
+
+  <input type="text" name="username" placeholder="read-a-holic">
+
+  <br></br>
+
+  <label>Password:</label>
+
+  <input type="password" name="password" placeholder="">
+
+  <br></br>
+
+  <input type="submit" value="Log In">
+</form>
