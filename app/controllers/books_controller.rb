@@ -26,4 +26,17 @@ class BooksController < ApplicationController
       redirect to "/books/#{@book.id}"
     end
   end
+
+  get '/books/:id' do
+    if session[:user_id]
+      @book = Book.find_by_id(params[:id])
+      if session[:user_id] == @book.id
+        erb :'/books/show_book'
+      else
+        redirect to '/books'
+      end
+    else
+      redirect to '/login'
+    end
+  end
 end
