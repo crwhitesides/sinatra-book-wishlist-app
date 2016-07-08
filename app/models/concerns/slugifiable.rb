@@ -9,8 +9,9 @@ module Slugifiable
 
   module ClassMethods
 
-    def find_by_slug(slug)
-      self.all.detect { |instance| instance.slug == slug }
+    def find_by_slug(slug, session_user_id)
+      books = self.all.find_all { |instance| instance.slug == slug }
+      books.detect { |book| book.user_id == session_user_id }
     end
   end
 
