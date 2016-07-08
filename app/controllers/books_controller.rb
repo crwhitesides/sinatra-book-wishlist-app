@@ -19,7 +19,7 @@ class BooksController < ApplicationController
   end
 
   post '/books' do
-    @book = Book.find_by(title: params[:title], author: params[:author])
+    @book = Book.find_by(title: params[:title], author: params[:author], user_id: session[:user_id])
     
     if @book
       flash[:message] = "** It looks like that book is already on your list. **"
