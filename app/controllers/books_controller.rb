@@ -37,7 +37,8 @@ class BooksController < ApplicationController
   get '/books/:slug' do
     if session[:user_id]
       @book = Book.find_by_slug(params[:slug], session[:user_id])
-      if @book.user_id == session[:user_id]
+      
+      if @book
         erb :'/books/show_book'
       else
         redirect to '/books'
@@ -50,7 +51,8 @@ class BooksController < ApplicationController
   get '/books/:slug/edit' do
     if session[:user_id]
       @book = Book.find_by_slug(params[:slug], session[:user_id])
-      if session[:user_id] == @book.user_id
+
+      if @book
         erb :'/books/edit_book'
       else
         redirect to '/books'
@@ -76,7 +78,8 @@ class BooksController < ApplicationController
   delete '/books/:slug/delete' do
     if session[:user_id]
       @book = Book.find_by_slug(params[:slug], session[:user_id])
-      if @book.user_id == session[:user_id]
+
+      if @book
         @book.delete
         redirect to '/books'
       else
